@@ -4,12 +4,14 @@
 //	Author:	Wayne Howell
 //	Email:	Support@ArtisticLicence.com
 //
+//  modified by Alex Christoffer Rasmussen 12-July 2017
 //////////////////////////////////////////////////////////////
 
 #ifndef _ARTNET_H_
 #define _ARTNET_H_
 
 #include "Art-NetOemCodes.h"
+#include <inttypes.h>
 
 #define NETID0 2
 	// Primary 2.x.y.z
@@ -222,7 +224,7 @@
 typedef struct {
 	uint8_t IP[4];	// IP address
 	uint16_t Port;	// UDP port	BYTE-SWAPPED MANUALLY
-} T_Addr;
+} Addr_t;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -243,7 +245,7 @@ typedef struct S_ArtPoll {
                                   // bit 3 = 0 (If Bit 2 then) broadcast diagnostics messages
                                   // bit 3 = 1 (If Bit 2 then) unicast diagnostics messages
 	uint8_t Priority;                 // Set the lowest priority of diagnostics message that node should send. See DpXxx defines above.
-} T_ArtPoll;
+} ArtPoll_t;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -254,7 +256,7 @@ typedef struct S_ArtPoll {
 typedef struct S_ArtPollReply {
 	uint8_t ID[8];          // protocol ID = "Art-Net"
 	uint16_t OpCode;        // == OpPollReply
-	T_Addr BoxAddr;       // 0 if not yet configured
+	Addr_t BoxAddr;       // 0 if not yet configured
 
 	uint8_t VersionInfoHi;  // The node's current FIRMWARE VERS hi
 	uint8_t VersionInfoLo;  // The node's current FIRMWARE VERS lo
@@ -366,7 +368,7 @@ typedef struct S_ArtPollReply {
                       // bit 2-7 not implemented, transmit as zero
 
   uint8_t Filler[26];   // Filler bytes, currently zero.
-} T_ArtPollReply;
+} ArtPollReply_t;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -386,7 +388,7 @@ typedef struct S_ArtDmx {
 	uint8_t Net;                	   // The high 7 bits of the 15 bit universe address.
 	uint16_t Length;			           // BYTE-SWAPPED MANUALLY. Length of array below
 	uint8_t Data[MaxDataLength];     // Variable length array. First entry is channel 1 level (NOT THE START CODE)
-} T_ArtDmx;
+} ArtDmx_t;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -406,7 +408,7 @@ typedef struct S_ArtNzs {
 	uint8_t Net;                	    // The high 7 bits of the 15 bit universe address.
 	uint16_t Length;			            // BYTE-SWAPPED MANUALLY. Length of array below
 	uint8_t Data[MaxDataLength];
-} T_ArtNzs;
+} ArtNzs_t;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -425,7 +427,7 @@ typedef struct S_ArtDiagData {
 	uint8_t Filler3;
 	uint16_t Length;			// BYTE-SWAPPED MANUALLY. Length of array below
 	uint8_t Data[MaxDataLength]; 	// Variable size array which is defined as maximum here.
-} T_ArtDiagData;
+} ArtDiagData_t;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -442,7 +444,7 @@ typedef struct S_ArtCommand {
 	uint8_t EstaManLo;		// ESTA manufacturer id, lo byte  // == 0xffff for the global command set
 	uint16_t Length;			// BYTE-SWAPPED MANUALLY. Length of array below. Range 0 - 512
 	uint8_t Data[MaxDataLength];  	// Variable size array which is defined as maximum here. Contains null terminated command text.
-} T_ArtCommand;
+} ArtCommand_t;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -498,7 +500,7 @@ typedef struct S_ArtAddress {
 
 
 
-} T_ArtAddress;
+} ArtAddress_t;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -549,7 +551,7 @@ typedef struct S_ArtIpProg {
 	uint8_t Spare7;
 	uint8_t Spare8;
 
-} T_ArtIpProg;
+} ArtIpProg_t;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -591,7 +593,7 @@ typedef struct S_ArtIpProgReply {
 	uint8_t Spare7;
 	uint8_t Spare8;
 
-} T_ArtIpProgReply;
+} ArtIpProgReply_t;
 
 
 #endif
