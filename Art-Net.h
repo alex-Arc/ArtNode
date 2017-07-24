@@ -465,7 +465,7 @@ typedef struct S_ArtAddress {
 					// Use value 0x7f for no change.
 
 
-	uint8_t Filler2;                  // The physical i/p 0-3. For Debug only
+	uint8_t BindIndex;                  // BindIndex
 
 
 	uint8_t ShortName[ShortNameLength]; // null ignored
