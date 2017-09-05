@@ -103,6 +103,7 @@ public:
     ArtConfig_t & getConfig();
     uint16_t getAddress(uint8_t subUni, uint8_t net);
     uint16_t getStartAddress(uint8_t bind_index);
+    uint16_t getEndAddress(uint8_t bind_index);
     // uint16_t getStartAddress();
     uint8_t* getBufferData();
     uint16_t getBufferSize();
