@@ -771,7 +771,7 @@ typedef struct S_FirmwareFileFormat {
   uchar Oem[256]; // An array of 256 words. Each word is hi byte first and represents an Oem code for which this file is valid. Unused entries must be filled with 0x0000.
   uchar Spare[255];
   uchar Length[4]; // MSB->LSB The total length in words of the firmware information following this field.
-  uchar Data[]; // The firmware data as an array of 16 bit values ordered hi byte first. The actual data is manufacturer specific.
+  uchar *Data; // The firmware data as an array of 16 bit values ordered hi byte first. The actual data is manufacturer specific.
 }T_FirmwareFileFormat;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
