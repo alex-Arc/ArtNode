@@ -492,7 +492,7 @@ typedef struct S_ArtPollReply {
 	uchar	BindIndex;		// Set to zero if no binding, otherwise this number represents the order of bound devices. A lower number means closer to root device.
 
 	uchar 	Status2;                          // bit 0 = 0 Node does not support web browser
-        					  // bit 0 = 1 Node supports web browser configuration	
+        					  // bit 0 = 1 Node supports web browser configuration
 
         					  // bit 1 = 0 Node's IP address is manually configured
         					  // bit 1 = 1 Node's IP address is DHCP configured
@@ -664,7 +664,7 @@ typedef struct S_ArtIpProg {
 							// Bit 3 hi = Return all three paraameters to default. (This bit takes priority).
 							// Bit 2 hi = Use custom IP in this packet.
 							// Bit 1 hi = Use custom Subnet Mask in this packet.
-							// Bit 0 hi = Use custom Port number in this packet. 
+							// Bit 0 hi = Use custom Port number in this packet.
 
 	uchar Filler4;			  // Fill to word boundary.
 	uchar ProgIpHi;			  // Use this IP if Command.Bit2
@@ -681,13 +681,13 @@ typedef struct S_ArtIpProg {
 	uchar ProgPortLo;
 
 	uchar Spare1;			  // Set to zero, do not test in receiver.
-	uchar Spare2;	
-	uchar Spare3;	
-	uchar Spare4;	
-	uchar Spare5;	
-	uchar Spare6;	
+	uchar Spare2;
+	uchar Spare3;
+	uchar Spare4;
+	uchar Spare5;
+	uchar Spare6;
 	uchar Spare7;
-	uchar Spare8;	
+	uchar Spare8;
 
 } T_ArtIpProg;
 
@@ -724,16 +724,73 @@ typedef struct S_ArtIpProgReply {
 
 	uchar Status;			// Bit 6 set if DHCP enabled
 	uchar Spare2;			// Set to zero, do not test in receiver.
-	uchar Spare3;	
+	uchar Spare3;
 	uchar Spare4;
 	uchar Spare5;
-	uchar Spare6;	
-	uchar Spare7;	
-	uchar Spare8;	
+	uchar Spare6;
+	uchar Spare7;
+	uchar Spare8;
 
 } T_ArtIpProgReply;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Frimeware update from Server to Node.
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+typedef struct S_ArtFirmwareMaster {
+	uchar ID[8];                    // protocol ID = "Art-Net"
+	ushort OpCode;                  // == OpFirmwareMaster
+	uchar ProtVerHi;                // 0
+	uchar ProtVerLo;                // protocol version, set to ProtocolVersion
+  uchar Filler1;
+	uchar Filler2;
+	uchar Type;			// Defines the packet contents as follows:
+                  // 0x00 FirmFirst: The first packet of firmware upload.
+                  // 0x01 FirmCont: A continuation packet of a firmware upload.
+                  // 0x02 FirmLast: The last packet of a firmware upload.
+                  // 0x03 UbeaFirst The first packet of a UBEA upload.
+                  // 0x04 UbeaCont A consecutive continuation packet of a UBEA upload.
+                  // 0x05 UbeaLast The last packet of a UBEA upload
+  uchar BlockId;  // Counts the consecutive blocks of firmware upload. Starting at 0x00 for the FirmFirst or UbeaFirst packet
+  union {
+    uint64_t FirmwareLength;
+    uchar FirmwareLength[4];
+  };
+  uchar Spare[20];
+  uchar Data[512];
+} T_ArtFirmwareMaster;
+
+typedef struct S_FirmwareFileFormat {
+  uchar ChecksumHi; // This is a 16 bit, one’s-complement checksum of the firmware data area.
+  uchar ChecksumLo; // LSB of above
+  uchar VersInfoHi; // High byte of Node’s firmware revision number. The Controller should only use this field to decide if a firmware update should proceed. The convention is that a higher number is a more recent release of firmware.
+  uchar VersInfoLo; // LSB of above
+  uchar UserName[30]; // byte field of user name information. This information is not checked by the Node. It is purely for display by the Controller. It should contain a human readable description of file and version number. Whilst this is a fixed length field, it must contain a null termination.
+  uchar Oem[256]; // An array of 256 words. Each word is hi byte first and represents an Oem code for which this file is valid. Unused entries must be filled with 0x0000.
+  uchar Spare[255];
+  uchar Length[4]; // MSB->LSB The total length in words of the firmware information following this field.
+  uchar Data[]; // The firmware data as an array of 16 bit values ordered hi byte first. The actual data is manufacturer specific.
+}T_FirmwareFileFormat;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Frimeware Reply from Node to Server.
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+typedef struct S_ArtFirmwareReply {
+  uchar ID[8];                    // protocol ID = "Art-Net"
+	ushort OpCode;                  // == OpFirmwareMaster
+	uchar ProtVerHi;                // 0
+	uchar ProtVerLo;                // protocol version, set to ProtocolVersion
+  uchar Filler1;
+	uchar Filler2;
+  uchar Type;                     // 0x00 FirmBlockGood Last packet received successfully.
+                                  // 0x01 FirmAll Good All firmware received successfully.
+                                  // 0xff FirmFail Firmware upload failed.  (All error conditions).
+  uchar Spare[21];
+} T_ArtFirmwareReply;
 
 #endif
-
-
