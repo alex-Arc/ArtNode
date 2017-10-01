@@ -191,6 +191,24 @@ typedef unsigned long ulong;
 #define AcClearOp2	0x92		// Clear all data buffers associated with output port 2
 #define AcClearOp3	0x93		// Clear all data buffers associated with output port 3
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Firmeware codes
+//Defines the packet contents as follows
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Types from server
+#define FirmFirst 0x00
+#define FirmCont 0x01
+#define FirmLast 0x02
+#define UbeaFirst 0x03
+#define UbeaCont 0x04
+#define UbeaLast 0x05
+
+// types from node
+#define FirmBlockGood 0x00
+#define FirmAll 0x01
+#define FirmFail 0xFF
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
