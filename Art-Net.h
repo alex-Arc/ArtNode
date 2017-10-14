@@ -87,6 +87,7 @@ typedef unsigned long ulong;
 #define OpOutput 	       	0x5000 // Zero start code dmx packets
 #define OpDmx	 	       	0x5000 // Zero start code dmx packets
 #define OpNzs	 	       	0x5100 // Non-Zero start code dmx packets (excluding RDM)
+#define OpSync            0x5200 // synchronise output
 #define OpAddress 	  	0x6000 // Program Node Settings
 #define OpInput 	        0x7000 // Setup DMX input enables
 
@@ -474,7 +475,7 @@ typedef struct S_ArtPollReply {
 	uchar	BindIndex;		// Set to zero if no binding, otherwise this number represents the order of bound devices. A lower number means closer to root device.
 
 	uchar 	Status2;                          // bit 0 = 0 Node does not support web browser
-        					  // bit 0 = 1 Node supports web browser configuration	
+        					  // bit 0 = 1 Node supports web browser configuration
 
         					  // bit 1 = 0 Node's IP address is manually configured
         					  // bit 1 = 1 Node's IP address is DHCP configured
@@ -646,7 +647,7 @@ typedef struct S_ArtIpProg {
 							// Bit 3 hi = Return all three paraameters to default. (This bit takes priority).
 							// Bit 2 hi = Use custom IP in this packet.
 							// Bit 1 hi = Use custom Subnet Mask in this packet.
-							// Bit 0 hi = Use custom Port number in this packet. 
+							// Bit 0 hi = Use custom Port number in this packet.
 
 	uchar Filler4;			  // Fill to word boundary.
 	uchar ProgIpHi;			  // Use this IP if Command.Bit2
@@ -663,13 +664,13 @@ typedef struct S_ArtIpProg {
 	uchar ProgPortLo;
 
 	uchar Spare1;			  // Set to zero, do not test in receiver.
-	uchar Spare2;	
-	uchar Spare3;	
-	uchar Spare4;	
-	uchar Spare5;	
-	uchar Spare6;	
+	uchar Spare2;
+	uchar Spare3;
+	uchar Spare4;
+	uchar Spare5;
+	uchar Spare6;
 	uchar Spare7;
-	uchar Spare8;	
+	uchar Spare8;
 
 } T_ArtIpProg;
 
@@ -706,16 +707,14 @@ typedef struct S_ArtIpProgReply {
 
 	uchar Status;			// Bit 6 set if DHCP enabled
 	uchar Spare2;			// Set to zero, do not test in receiver.
-	uchar Spare3;	
+	uchar Spare3;
 	uchar Spare4;
 	uchar Spare5;
-	uchar Spare6;	
-	uchar Spare7;	
-	uchar Spare8;	
+	uchar Spare6;
+	uchar Spare7;
+	uchar Spare8;
 
 } T_ArtIpProgReply;
 
 
 #endif
-
-
