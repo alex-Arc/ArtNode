@@ -87,6 +87,7 @@ typedef unsigned long ulong;
 #define OpOutput 	       	0x5000 // Zero start code dmx packets
 #define OpDmx	 	       	0x5000 // Zero start code dmx packets
 #define OpNzs	 	       	0x5100 // Non-Zero start code dmx packets (excluding RDM)
+#define OpSync            0x5200 // synchronise output
 #define OpAddress 	  	0x6000 // Program Node Settings
 #define OpInput 	        0x7000 // Setup DMX input enables
 
