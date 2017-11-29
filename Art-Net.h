@@ -755,10 +755,7 @@ typedef struct S_ArtFirmwareMaster {
                   // 0x04 UbeaCont A consecutive continuation packet of a UBEA upload.
                   // 0x05 UbeaLast The last packet of a UBEA upload
   uchar BlockId;  // Counts the consecutive blocks of firmware upload. Starting at 0x00 for the FirmFirst or UbeaFirst packet
-  union {
-    uint64_t FirmwareLength;
-    uchar FirmwareLength[4];
-  };
+  uchar FirmwareLength[4];
   uchar Spare[20];
   uchar Data[512];
 } T_ArtFirmwareMaster;
