@@ -621,33 +621,33 @@ typedef struct S_ArtIpProgReply {
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 typedef struct S_ArtFirmwareMaster {
-	uchar ID[8];                    // protocol ID = "Art-Net"
-	ushort OpCode;                  // == OpFirmwareMaster
-	uchar ProtVerHi;                // 0
-	uchar ProtVerLo;                // protocol version, set to ProtocolVersion
-  uchar Filler1;
-	uchar Filler2;
-	uchar Type;			// Defines the packet contents as follows:
+	uint8_t ID[8];                    // protocol ID = "Art-Net"
+	uint16_t OpCode;                  // == OpFirmwareMaster
+	uint8_t ProtVerHi;                // 0
+	uint8_t ProtVerLo;                // protocol version, set to ProtocolVersion
+  uint8_t Filler1;
+	uint8_t Filler2;
+	uint8_t Type;			// Defines the packet contents as follows:
                   // 0x00 FirmFirst: The first packet of firmware upload.
                   // 0x01 FirmCont: A continuation packet of a firmware upload.
                   // 0x02 FirmLast: The last packet of a firmware upload.
                   // 0x03 UbeaFirst The first packet of a UBEA upload.
                   // 0x04 UbeaCont A consecutive continuation packet of a UBEA upload.
                   // 0x05 UbeaLast The last packet of a UBEA upload
-  uchar BlockId;  // Counts the consecutive blocks of firmware upload. Starting at 0x00 for the FirmFirst or UbeaFirst packet
-  uchar FirmwareLength[4];
-  uchar Spare[20];
-  uchar Data[512];
+  uint8_t BlockId;  // Counts the consecutive blocks of firmware upload. Starting at 0x00 for the FirmFirst or UbeaFirst packet
+  uint8_t FirmwareLength[4];
+  uint8_t Spare[20];
+  uint8_t Data[512];
 } T_ArtFirmwareMaster;
 
 typedef struct S_FirmwareFileFormat {
-  uchar ChecksumHi; // This is a 16 bit, one’s-complement checksum of the firmware data area.
-  uchar ChecksumLo; // LSB of above
-  uchar VersInfoHi; // High byte of Node’s firmware revision number. The Controller should only use this field to decide if a firmware update should proceed. The convention is that a higher number is a more recent release of firmware.
-  uchar VersInfoLo; // LSB of above
-  uchar UserName[30]; // byte field of user name information. This information is not checked by the Node. It is purely for display by the Controller. It should contain a human readable description of file and version number. Whilst this is a fixed length field, it must contain a null termination.
-  uchar Oem[256]; // An array of 256 words. Each word is hi byte first and represents an Oem code for which this file is valid. Unused entries must be filled with 0x0000.
-  uchar Spare[255];
-  uchar Length[4]; // MSB->LSB The total length in words of the firmware information following this field.
-  uchar *Data; // The firmware data as an array of 16 bit values ordered hi byte first. The actual data is manufacturer specific.
+  uint8_t ChecksumHi; // This is a 16 bit, one’s-complement checksum of the firmware data area.
+  uint8_t ChecksumLo; // LSB of above
+  uint8_t VersInfoHi; // High byte of Node’s firmware revision number. The Controller should only use this field to decide if a firmware update should proceed. The convention is that a higher number is a more recent release of firmware.
+  uint8_t VersInfoLo; // LSB of above
+  uint8_t UserName[30]; // byte field of user name information. This information is not checked by the Node. It is purely for display by the Controller. It should contain a human readable description of file and version number. Whilst this is a fixed length field, it must contain a null termination.
+  uint8_t Oem[256]; // An array of 256 words. Each word is hi byte first and represents an Oem code for which this file is valid. Unused entries must be filled with 0x0000.
+  uint8_t Spare[255];
+  uint8_t Length[4]; // MSB->LSB The total length in words of the firmware information following this field.
+  uint8_t *Data; // The firmware data as an array of 16 bit values ordered hi byte first. The actual data is manufacturer specific.
 }T_FirmwareFileFormat;
